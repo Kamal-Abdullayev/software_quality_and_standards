@@ -24,6 +24,11 @@ public class ProductService {
         return unwrapProduct(product);
     }
 
+    public Long deleteProductById(Long id) {
+        productRepository.deleteById(id);
+        return id;
+    }
+
 
     static Product unwrapProduct(Optional<Product> entity) {
         if (entity.isPresent()) return entity.get();
