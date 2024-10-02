@@ -5,6 +5,7 @@ import com.taltech.demo.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -18,6 +19,15 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public Product getProductById(Long id) {
+        Optional<Product> product = productRepository.findById(id);
+        return unwrapProduct(product, id);
+    }
 
+
+    static Product unwrapProduct(Optional<Product> entity, Long id) {
+        if (entity.isPresent()) return entity.get();
+        return null;
+    }
 
 }
