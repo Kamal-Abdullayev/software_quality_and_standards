@@ -21,11 +21,11 @@ public class ProductService {
 
     public Product getProductById(Long id) {
         Optional<Product> product = productRepository.findById(id);
-        return unwrapProduct(product, id);
+        return unwrapProduct(product);
     }
 
 
-    static Product unwrapProduct(Optional<Product> entity, Long id) {
+    static Product unwrapProduct(Optional<Product> entity) {
         if (entity.isPresent()) return entity.get();
         return null;
     }
