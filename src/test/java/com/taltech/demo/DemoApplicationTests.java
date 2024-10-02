@@ -72,6 +72,20 @@ class DemoApplicationTests {
 		Assertions.assertNull(result);
 	}
 
+	@DisplayName("Should delete product by ID")
+	@Test
+	void shouldDeleteProductById() {
+		Long productId = 1L;
+
+		Mockito.when(productService.deleteProductById(productId)).thenAnswer(invocation -> {
+			productRepository.deleteById(productId);
+			return productId;
+		});
+
+		productService.deleteProductById(productId);
+
+		Mockito.verify(productRepository).deleteById(productId);
+	}
 
 
 }
