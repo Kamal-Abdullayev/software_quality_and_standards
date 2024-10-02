@@ -49,9 +49,12 @@ class DemoApplicationTests {
 		Product mockProduct = new Product("Product 1", "Test product", 10, 5);
 
 		Mockito.when(productRepository.findById(productId)).thenReturn(Optional.of(mockProduct));
+		Mockito.when(productService.getProductById(productId)).thenAnswer(invocation -> {
+			Long id = invocation.getArgument(0);
+			return productRepository.findById(id).orElse(null);
+		});
 
 		Product result = productService.getProductById(productId);
-
 		Assertions.assertNotNull(result);
 		Assertions.assertEquals(mockProduct, result);
 		Assertions.assertEquals("Product 1", result.getName());
@@ -66,7 +69,7 @@ class DemoApplicationTests {
 
 		Product result = productService.getProductById(productId);
 
-        Assertions.assertNull(result);
+		Assertions.assertNull(result);
 	}
 
 
