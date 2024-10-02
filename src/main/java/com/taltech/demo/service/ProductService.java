@@ -29,6 +29,9 @@ public class ProductService {
         return id;
     }
 
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
+    }
 
     static Product unwrapProduct(Optional<Product> entity) {
         if (entity.isPresent()) return entity.get();
