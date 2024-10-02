@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class DemoApplicationTests {
@@ -40,6 +41,33 @@ class DemoApplicationTests {
 		Assertions.assertEquals(mockData, result);
 	}
 
+
+	@DisplayName("Should return product when ID is found")
+	@Test
+	void shouldReturnProductWhenIdIsFound() {
+		Long productId = 1L;
+		Product mockProduct = new Product("Product 1", "Test product", 10, 5);
+
+		Mockito.when(productRepository.findById(productId)).thenReturn(Optional.of(mockProduct));
+
+		Product result = productService.getProductById(productId);
+
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals(mockProduct, result);
+		Assertions.assertEquals("Product 1", result.getName());
+	}
+
+	@DisplayName("Should return null when product is not found")
+	@Test
+	void shouldReturnNullWhenProductNotFound() {
+		Long productId = 10L;
+
+		Mockito.when(productRepository.findById(productId)).thenReturn(Optional.empty());
+
+		Product result = productService.getProductById(productId);
+
+        Assertions.assertNull(result);
+	}
 
 
 
