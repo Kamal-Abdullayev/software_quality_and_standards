@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "8e631343-5a1c-4fc1-83f2-10a467e3a347",
+		"name": "demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16551530"
+	},
+	"item": [
+		{
+			"name": "getProductList",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response array is not empty\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.be.above(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each product has required fields\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (product) {\r",
+							"        pm.expect(product).to.have.property('id'); \r",
+							"        pm.expect(product).to.have.property('name'); \r",
+							"        pm.expect(product).to.have.property('description');\r",
+							"        pm.expect(product).to.have.property('price'); \r",
+							"        pm.expect(product).to.have.property('quantity');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"All products have valid price and quantity\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (product) {\r",
+							"        pm.expect(product.price).to.be.a('number');\r",
+							"        pm.expect(product.quantity).to.be.a('number');\r",
+							"        pm.expect(product.price).to.be.at.least(0); \r",
+							"        pm.expect(product.quantity).to.be.at.least(0);\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is a product object\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product has required fields\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    pm.expect(jsonData).to.have.property('name');\r",
+							"    pm.expect(jsonData).to.have.property('description');\r",
+							"    pm.expect(jsonData).to.have.property('price');\r",
+							"    pm.expect(jsonData).to.have.property('quantity');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product fields have valid data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.be.a('number');\r",
+							"    pm.expect(jsonData.name).to.be.a('string');\r",
+							"    pm.expect(jsonData.description).to.be.a('string');\r",
+							"    pm.expect(jsonData.price).to.be.a('number');\r",
+							"    pm.expect(jsonData.quantity).to.be.a('number');\r",
+							"    pm.expect(jsonData.price).to.be.at.least(0); \r",
+							"    pm.expect(jsonData.quantity).to.be.at.least(0);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createProduct",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is a product object\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product has required fields\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    pm.expect(jsonData).to.have.property('name');\r",
+							"    pm.expect(jsonData).to.have.property('description');\r",
+							"    pm.expect(jsonData).to.have.property('price');\r",
+							"    pm.expect(jsonData).to.have.property('quantity');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product fields have valid data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name).to.eql(\"Test product\");\r",
+							"    pm.expect(jsonData.description).to.eql(\"Test\");\r",
+							"    pm.expect(jsonData.price).to.be.a('number');\r",
+							"    pm.expect(jsonData.quantity).to.be.a('number');\r",
+							"    pm.expect(jsonData.price).to.eql(9.99);\r",
+							"    pm.expect(jsonData.quantity).to.eql(20);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product ID is generated\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.be.a('number'); \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Test product\",\r\n  \"description\": \"Test\",\r\n  \"price\": 9.99,\r\n  \"quantity\": 20\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/product/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteProducts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204 No Content\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body should be empty\", function () {\r",
+							"    pm.expect(pm.response.text()).to.be.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
